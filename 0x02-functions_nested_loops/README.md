@@ -1,6 +1,6 @@
 # Functions and nested loops
 
-### Authors
+### programmer
 
 * Tevin Agok
 
