@@ -1,23 +1,27 @@
 #include "holberton.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * main - check the code for Holberton School students.
+ * _strdup - Returns pointer to newly allocated space which contains a string
+ * @str: String to be copied
  *
- * Return: Always 0.
+ * Return: Pointer to new string identical to str, NULL if str = NULL
  */
-int main(void)
+char *_strdup(char *str)
 {
 	char *s;
+	int i, len;
 
-	s = _strdup("teststring");
-	if (s == NULL)
-	{
-		printf("failed to allocate memory\n");
-		return (1);
-	}
-	printf("%s\n", s);
-	free(s);
-	return (0);
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (*(str + i))
+		++i;
+	len = i;
+	s = malloc(sizeof(char) * (len + 1));
+	if (!s)
+		return (NULL);
+	for (i = 0; i <= len; ++i)
+		*(s + i) = *(str + i);
+	return (s);
 }
