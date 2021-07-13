@@ -1,63 +1,41 @@
+#include "holberton.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "holberton.h"
 
 /**
- * _strlen - returns the length of a string
- * @s: string
- * Return: length
+ * argstostr - Concatenates all arguments
+ * @ac: Number of command line arguments
+ * @av: Array containing command line arguments
+ *
+ * Return: Pointer to a new string, NULL if ac or av are 0, or if fail
  */
-
-int _strlen(char *s)
-{
-	int len = 0;
-
-	while (*s != '\0')
-		len++, s++;
-
-	return (len);
-}
-
-/**
- * argstostr - concatenates all the arguments of your program
- * @ac: argc
- * @av: arguments
- * Return: pointer to array
- */
-
 char *argstostr(int ac, char **av)
 {
-	char *s;
-	int len = 0, i, j, k = 0;
+	int i, j;
+	int k = 0;
+	int len = 0;
+	char *str;
 
-	if (ac == 0 || av == NULL) /* validate input */
+	if (ac == 0 || av == NULL)
 		return (NULL);
-
-	/* find length to malloc */
-	for (i = 0; i < ac; i++)
+	for (i = 0; i < ac; ++i)
 	{
-		len += _strlen(av[i]);
+		for (j = 0; av[i][j]; ++j)
+			;
+		len += j;
 	}
-	len += (ac + 1); /* add space for newlines and null terminator */
-
-	/* allocate memory and free if error */
-	s = malloc(len * sizeof(char));
-
-	if (s == NULL)
-	{
-		free(s);
+	len += i;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (NULL);
-	}
-
-	/* insert each arg into *str */
-	for (i = 0; i < ac; i++)
+	for (i = 0; i < ac; ++i)
 	{
-		for (j = 0; j < _strlen(av[i]); j++)
+		for (j = 0; av[i][j]; ++j, ++k)
 		{
-			s[k++] = av[i][j];
+			str[k] = av[i][j];
 		}
-		s[k++] = '\n';
+		str[k++] = '\n';
 	}
-
-	return (s);
+	str[k] = '\0';
+	return (str);
 }
